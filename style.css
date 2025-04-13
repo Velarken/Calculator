@@ -1,0 +1,47 @@
+div {
+    border: 1px solid red;
+}
+
+#display {
+    width: 92%;
+    height: 20%;
+    margin:20px;
+}
+
+#inputExpression {
+    height:40%;
+    margin:10px;
+}
+
+#expressionTotal {
+    height: 30%;
+    margin: 5px 10px 10px 10px;
+}
+
+#calculator {
+    border: 2px solid blue;
+    height: 90vh;
+    width: 70vh;
+}
+
+#allButtons {
+    height: 74%;
+}
+
+#rowButtons {
+    display:flex;
+    height: 20%;
+    margin:20px;
+}
+
+#button {
+    background-color: darkslategrey;
+    border-radius: 8px;
+    color:rgb(126, 221, 221);
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width:25%;
+    height:70%;
+    margin: 15px;
+}
