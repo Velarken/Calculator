@@ -71,7 +71,7 @@ const minusOperator = document.querySelector(".minus").addEventListener('click',
 const multiplyOperator = document.querySelector(".multiply").addEventListener('click', () => display('*'));
 const divideOperator = document.querySelector(".divide").addEventListener('click', () => display('/'));
 const equalsOperator = document.querySelector(".equals").addEventListener('click', () => display('='));
-const clear = document.querySelector(".clear").addEventListener('click', () => display("CLEAR"));
+const clear = document.querySelector(".clear").addEventListener('click', () => clearDisplay());
 
 // display function
 function display(clicked) {
@@ -89,12 +89,10 @@ function display(clicked) {
             } else if (clicked == '/') {
                 operatorInput = '/';
                 displayOutput.textContent = secondInput;
-            } else if (clicked == "CLEAR") {
-                clearDisplay();
-            } else {
+            }  else {
                 firstInput.push(clicked);
             }
-            setDisplay();
+            convertToNumber();
         } else if (firstInput !== 0 && operatorInput !== "") {
             if (clicked == "+" || clicked == "*" || clicked == "-" || clicked == "/") {
                 alert("You can only add two numbers!")
@@ -104,26 +102,29 @@ function display(clicked) {
                 displayOutput.textContent = operate(operatorInput, firstInput, secondInput);
             } else {
                 secondInput.push(clicked);
-                setDisplay();
+                convertToNumber();
             }
-        }
+        } 
 
         // display created string    
 };
 
-// Decide what is displayed
-function setDisplay() {
+// Convert user input to a string
+function convertToNumber() {
     if (firstInput.length !== 0 && secondInput.length === 0) {
         let stringInput = firstInput.toString().replace(/,/g, '');
-        displayOutput.textContent = stringInput;
-    } else if (secondInput.length !== 0) {
+        displayOutput.textContent = Number(stringInput);
+    } else if (secondInput.length !== 0 && secondInput !== "clear") {
         let stringInput = secondInput.toString().replace(/,/g, '');
-        displayOutput.textContent = stringInput;
+        displayOutput.textContent = Number(stringInput);
+    } else {
+        clearDisplay();
     }
 }
 
 // Reset variables to empty and clear textContent
 function clearDisplay() {
+    console.log("display cleared")
     displayOutput.textContent = " ";
     firstInput = [];
     secondInput = [];
@@ -131,7 +132,20 @@ function clearDisplay() {
 }
 
 // TODO
-    // 
+    // Accept additional numbers for calculation
+        /* 
+        (12 + 7 + 8) Should evaluate 12+7 first, then add 8, like:  (12+7) + 8
+        */
+    // Accept decimal answers
+        // Round at 9 digits
+    // Add logic to avoid dividing by 0
+    // Ensure that after an expression is evaluated, 
+        // new numbers enter also reset all variables
+    // Add a backspace key that undoes the last input
+    // Add a decimal button that disables if the current number contains one
+    // Add support for keyboards
+    
 
 // KNOWN ISSUES
     // divide() returns NaN
+    // C button behavior inconsistant
