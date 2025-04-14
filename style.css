@@ -8,12 +8,12 @@ div {
     margin:20px;
 }
 
-#inputExpression {
+#input {
     height:40%;
     margin:10px;
 }
 
-#expressionTotal {
+#output {
     height: 30%;
     margin: 5px 10px 10px 10px;
 }
