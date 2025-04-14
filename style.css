@@ -6,20 +6,12 @@ div {
     width: 92%;
     height: 20%;
     margin:20px;
-}
-
-#input {
-    height:40%;
-    margin:10px;
-}
-
-#output {
-    height: 30%;
-    margin: 5px 10px 10px 10px;
+    font-size:50px;
 }
 
 #calculator {
     border: 2px solid blue;
+    background-color: rgb(117, 35, 155);
     height: 90vh;
     width: 70vh;
 }
