@@ -144,8 +144,7 @@ function clearDisplay() {
     // Add a backspace key that undoes the last input
     // Add a decimal button that disables if the current number contains one
     // Add support for keyboards
+    // Refactor code for clarity and efficiency
     
 
 // KNOWN ISSUES
-    // divide() returns NaN
-    // C button behavior inconsistant
