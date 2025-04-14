@@ -1,6 +1,6 @@
 // Essential Math Operations
 function add(firstNumber, secondNumber) {
-    if (firstNumber || secondNumber == NaN) {
+    if (!isNaN(firstNumber) && !isNaN(secondNumber)) {
         firstNumber = Number(firstNumber);
         secondNumber = Number(secondNumber);
     }
@@ -8,7 +8,7 @@ function add(firstNumber, secondNumber) {
 }
 
 function subtract(firstNumber,secondNumber) {
-    if (firstNumber || secondNumber == NaN) {
+    if (!isNaN(firstNumber) && !isNaN(secondNumber)) {
         firstNumber = Number(firstNumber);
         secondNumber = Number(secondNumber);
     }
@@ -16,7 +16,7 @@ function subtract(firstNumber,secondNumber) {
 }
 
 function multiply(firstNumber,secondNumber) {
-    if (firstNumber || secondNumber == NaN) {
+    if (!isNaN(firstNumber) && !isNaN(secondNumber)) {
         firstNumber = Number(firstNumber);
         secondNumber = Number(secondNumber);
     }
@@ -24,7 +24,7 @@ function multiply(firstNumber,secondNumber) {
 }
 
 function divide(firstNumber,secondNumber) {
-    if (firstNumber || secondNumber == NaN) {
+    if (!isNaN(firstNumber) && !isNaN(secondNumber)) {
         firstNumber = Number(firstNumber);
         secondNumber = Number(secondNumber);
     }
@@ -50,8 +50,8 @@ let operatorInput = "";
 let secondInput = [];
 
 // Constructors
-document.querySelector("#input").textContent = inputExpression;
-let output = document.querySelector("#output");
+// let displayInput = document.querySelector("#input").textContent = inputExpression;
+let displayOutput = document.querySelector("#display");
 
 // Numerical Event Listeners
 const buttonOne = document.querySelector('.one').addEventListener('click', () => display(1));
@@ -76,46 +76,62 @@ const clear = document.querySelector(".clear").addEventListener('click', () => d
 // display function
 function display(clicked) {
     console.log(clicked);
-    
-        if (clicked == '+') {
-            operatorInput = '+';
-        } else if (clicked == '-') {
-            operatorInput = '-';
-        } else if (clicked == '*') {
-            operatorInput = '*';
-        } else if (clicked == '/') {
-            operatorInput = '/';
-        } else {
-            firstInput.push(clicked);
+        if (operatorInput == "") {
+            if (clicked == '+') {
+                operatorInput = '+';
+                displayOutput.textContent = secondInput;
+            } else if (clicked == '-') {
+                operatorInput = '-';
+                displayOutput.textContent = secondInput;
+            } else if (clicked == '*') {
+                operatorInput = '*';
+                displayOutput.textContent = secondInput;
+            } else if (clicked == '/') {
+                operatorInput = '/';
+                displayOutput.textContent = secondInput;
+            } else if (clicked == "CLEAR") {
+                clearDisplay();
+            } else {
+                firstInput.push(clicked);
+            }
+            setDisplay();
+        } else if (firstInput !== 0 && operatorInput !== "") {
+            if (clicked == "+" || clicked == "*" || clicked == "-" || clicked == "/") {
+                alert("You can only add two numbers!")
+                console.log("clicked key not logged")
+            } else if (clicked == "=") {
+                console.log("call the operator function")
+                displayOutput.textContent = operate(operatorInput, firstInput, secondInput);
+            } else {
+                secondInput.push(clicked);
+                setDisplay();
+            }
         }
-        setDisplay();
+
         // display created string    
 };
 
+// Decide what is displayed
 function setDisplay() {
-    let stringInput = firstInput.toString().replace(/,/g, '');
-    output.textContent = stringInput;  
+    if (firstInput.length !== 0 && secondInput.length === 0) {
+        let stringInput = firstInput.toString().replace(/,/g, '');
+        displayOutput.textContent = stringInput;
+    } else if (secondInput.length !== 0) {
+        let stringInput = secondInput.toString().replace(/,/g, '');
+        displayOutput.textContent = stringInput;
+    }
+}
+
+// Reset variables to empty and clear textContent
+function clearDisplay() {
+    displayOutput.textContent = " ";
+    firstInput = [];
+    secondInput = [];
+    operatorInput = "";
 }
 
 // TODO
-    // Handle what happens when an operator is clicked
+    // 
 
 // KNOWN ISSUES
-
-
-
-
-    // if clicked button is a number
-        // concat number to end of string
-        // set input.textContent to string value
-    // if clicked button is an operator
-        // convert string to number, stored in "firstNumber"
-        // store operator in "operator"
-        // set output.textContent to string(firstNumber) and operator
-        // begin new empty string on input.textContent
-    // if clicked button is the equals key
-        // convert string to number, stored in "secondNumber"
-        // set input.textContent = firstNumber + operator + secondNumber
-        // run operation function on firstNumber, operator, secondNumber
-        // set output.textContent to the result of the function
-
+    // divide() returns NaN
