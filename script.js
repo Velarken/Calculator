@@ -32,7 +32,10 @@ function divide(firstNumber,secondNumber) {
 }
 
 function operate(operator, firstNumber, secondNumber) {
-    if (operator == '+') {
+    if (operator == "/" && secondNumber == 0) {
+        alert("You cannot divide by zero!");
+        clearDisplay();
+    } else if (operator == '+') {
         return add(firstNumber,secondNumber);
     } else if (operator == '-') {
         return subtract(firstNumber,secondNumber);
@@ -64,6 +67,7 @@ const buttonSeven = document.querySelector('.seven').addEventListener('click', (
 const buttonEight = document.querySelector('.eight').addEventListener('click', () => display(8));
 const buttonNine = document.querySelector('.nine').addEventListener('click', () => display(9));
 const buttonZero = document.querySelector('.zero').addEventListener('click', () => display(0));
+const buttonDecimal = document.querySelector('.decimal').addEventListener('click', () => display('.'));
 
 // Operator Event Listeners
 const plusOperator = document.querySelector(".plus").addEventListener('click', () => display('+'));
@@ -89,7 +93,9 @@ function display(clicked) {
             } else if (clicked == '/') {
                 operatorInput = '/';
                 displayOutput.textContent = secondInput;
-            }  else {
+            } else if (clicked == '.') {
+                firstInput.push(clicked);
+            } else {
                 firstInput.push(clicked);
             }
             convertToNumber();
@@ -135,10 +141,16 @@ function clearDisplay() {
     // Accept additional numbers for calculation
         /* 
         (12 + 7 + 8) Should evaluate 12+7 first, then add 8, like:  (12+7) + 8
+            // put all inputs into an array [43,"+",197,"-",81]
+            // use methods to determine positions of each element
+                // compute value of the first two numbers with given operator  
+                    // set return to a variable
+                // compute next value from the variable created above and the next number
+                // repeat as needed, array[0] may need to be a placeholder
+                    // odd indexes are numbers, evens are operators
         */
     // Accept decimal answers
         // Round at 9 digits
-    // Add logic to avoid dividing by 0
     // Ensure that after an expression is evaluated, 
         // new numbers enter also reset all variables
     // Add a backspace key that undoes the last input
@@ -148,3 +160,5 @@ function clearDisplay() {
     
 
 // KNOWN ISSUES
+    // numbers like 100 return NaN
+    // decimal numbers do not calculate
