@@ -1,12 +1,22 @@
 div {
-    border: 1px solid red;
+    border: 2px outset rgb(33, 3, 48);
+}
+
+body {
+    display:flex;
+    flex:1;
+    align-items: center;
+    justify-content: center;
 }
 
 #display {
+    background-color: white;
     width: 92%;
     height: 20%;
     margin:20px;
     font-size:50px;
+    align-items: end;
+    justify-content: end;
 }
 
 #calculator {
@@ -14,6 +24,7 @@ div {
     background-color: rgb(117, 35, 155);
     height: 90vh;
     width: 70vh;
+    margin-top: 30px;
 }
 
 #allButtons {
