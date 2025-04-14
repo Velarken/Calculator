@@ -1,5 +1,6 @@
 div {
     border: 2px outset rgb(33, 3, 48);
+    border-radius: 8px;
 }
 
 body {
@@ -10,37 +11,45 @@ body {
 }
 
 #display {
-    background-color: white;
+    background-color: rgb(247, 230, 255);
     width: 92%;
-    height: 20%;
-    margin:20px;
+    height: 30%;
+    margin:10px;
     font-size:50px;
     align-items: end;
     justify-content: end;
 }
 
 #calculator {
+    display:flex;
+    flex-direction: column;
     border: 2px solid blue;
     background-color: rgb(117, 35, 155);
     height: 90vh;
     width: 70vh;
     margin-top: 30px;
+    align-items: center;
 }
 
 #allButtons {
-    height: 74%;
+    flex:1 auto;
+    flex-direction: column;
+    width: 100%;
+
 }
 
 #rowButtons {
     display:flex;
-    height: 20%;
-    margin:20px;
+    flex: auto;
+    margin:2px;
 }
 
 #button {
     background-color: darkslategrey;
     border-radius: 8px;
     color:rgb(126, 221, 221);
+    text-shadow:
+        2px 2px 2px rgb(39, 10, 53);
     display:flex;
     align-items: center;
     justify-content: center;
@@ -48,3 +57,10 @@ body {
     height:70%;
     margin: 15px;
 }
+
+/* 
+TO DO:
+    - fix display so it is roughly 1.5 times bigger
+    - update color scheme
+    - add button press effect
+*/
