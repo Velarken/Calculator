@@ -93,12 +93,15 @@ function display(clicked) {
 };
 
 function setDisplay() {
-    let stringInput = firstInput.toString().replace(',', '');
+    let stringInput = firstInput.toString().replace(/,/g, '');
     output.textContent = stringInput;  
 }
 
+// TODO
+    // Handle what happens when an operator is clicked
+
 // KNOWN ISSUES
-/* ADDING MORE THAN 2 NUMBERS KEEPS THE COMMAS IN THE DISPLAY STATEMENT */
+
 
 
 
