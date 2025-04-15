@@ -1,34 +1,18 @@
 // Essential Math Operations
 function add(firstNumber, secondNumber) {
-    if (!isNaN(firstNumber) && !isNaN(secondNumber)) {
-        firstNumber = Number(firstNumber);
-        secondNumber = Number(secondNumber);
-    }
-    return firstNumber + secondNumber;
+    return Number(firstNumber) + Number(secondNumber);
 }
 
 function subtract(firstNumber,secondNumber) {
-    if (!isNaN(firstNumber) && !isNaN(secondNumber)) {
-        firstNumber = Number(firstNumber);
-        secondNumber = Number(secondNumber);
-    }
-    return firstNumber - secondNumber;
+    return Number(firstNumber) - Number(secondNumber);
 }
 
 function multiply(firstNumber,secondNumber) {
-    if (!isNaN(firstNumber) && !isNaN(secondNumber)) {
-        firstNumber = Number(firstNumber);
-        secondNumber = Number(secondNumber);
-    }
-    return firstNumber * secondNumber;
+    return Number(firstNumber) * Number(secondNumber);
 }
 
 function divide(firstNumber,secondNumber) {
-    if (!isNaN(firstNumber) && !isNaN(secondNumber)) {
-        firstNumber = Number(firstNumber);
-        secondNumber = Number(secondNumber);
-    }
-    return firstNumber / secondNumber;
+    return Number(firstNumber) / Number(secondNumber);
 }
 
 function operate(operator, firstNumber, secondNumber) {
@@ -45,16 +29,18 @@ function operate(operator, firstNumber, secondNumber) {
         return divide(firstNumber,secondNumber);
     }
 }
-// Declared Variables
-let inputExpression = 0;
-let outputExpression = "";
-let firstInput = [];
+// Input Variables
+let firstInput = "";
 let operatorInput = "";
-let secondInput = [];
+let secondInput = "";
 
-// Constructors
-// let displayInput = document.querySelector("#input").textContent = inputExpression;
+// Valid Characters
+const validInputs = "1234567890.";
+const validOperators = "+-*/";
+
+// Display Variables
 let displayOutput = document.querySelector("#display");
+let displayCurrentExpression = document.querySelector("#output");
 
 // Numerical Event Listeners
 const buttonOne = document.querySelector('.one').addEventListener('click', () => display(1));
@@ -67,52 +53,65 @@ const buttonSeven = document.querySelector('.seven').addEventListener('click', (
 const buttonEight = document.querySelector('.eight').addEventListener('click', () => display(8));
 const buttonNine = document.querySelector('.nine').addEventListener('click', () => display(9));
 const buttonZero = document.querySelector('.zero').addEventListener('click', () => display(0));
-const buttonDecimal = document.querySelector('.decimal').addEventListener('click', () => display('.'));
+const buttonDecimal = document.querySelector('.decimal')
+buttonDecimal.addEventListener('click', () => {
+    if (!operatorInput && !firstInput.includes(".")) {
+        display(buttonDecimal.textContent);
+    } else if (operatorInput && !secondInput.includes(".")) {
+        display(buttonDecimal.textContent);
+    } 
+});
 
 // Operator Event Listeners
-const plusOperator = document.querySelector(".plus").addEventListener('click', () => display('+'));
-const minusOperator = document.querySelector(".minus").addEventListener('click', () => display('-'));
-const multiplyOperator = document.querySelector(".multiply").addEventListener('click', () => display('*'));
-const divideOperator = document.querySelector(".divide").addEventListener('click', () => display('/'));
-const equalsOperator = document.querySelector(".equals").addEventListener('click', () => display('='));
-const clear = document.querySelector(".clear").addEventListener('click', () => clearDisplay());
+document.querySelector(".plus").addEventListener('click', () => display('+'));
+document.querySelector(".minus").addEventListener('click', () => display('-'));
+document.querySelector(".multiply").addEventListener('click', () => display('*'));
+document.querySelector(".divide").addEventListener('click', () => display('/'));
+document.querySelector(".equals").addEventListener('click', () => display('='));
+document.querySelector(".clear").addEventListener('click', () => clearDisplay());
 
 // display function
 function display(clicked) {
-    console.log(clicked);
-        if (operatorInput == "") {
-            if (clicked == '+') {
-                operatorInput = '+';
-                displayOutput.textContent = secondInput;
-            } else if (clicked == '-') {
-                operatorInput = '-';
-                displayOutput.textContent = secondInput;
-            } else if (clicked == '*') {
-                operatorInput = '*';
-                displayOutput.textContent = secondInput;
-            } else if (clicked == '/') {
-                operatorInput = '/';
-                displayOutput.textContent = secondInput;
-            } else if (clicked == '.') {
-                firstInput.push(clicked);
-            } else {
-                firstInput.push(clicked);
-            }
-            convertToNumber();
-        } else if (firstInput !== 0 && operatorInput !== "") {
-            if (clicked == "+" || clicked == "*" || clicked == "-" || clicked == "/") {
-                alert("You can only add two numbers!")
-                console.log("clicked key not logged")
-            } else if (clicked == "=") {
-                console.log("call the operator function")
-                displayOutput.textContent = operate(operatorInput, firstInput, secondInput);
-            } else {
-                secondInput.push(clicked);
-                convertToNumber();
-            }
+    if (validInputs.includes(clicked)) {
+        console.log(`Number clicked! ${clicked}`)
+        if (!operatorInput) {
+            firstInput += clicked;
+            displayOutput.textContent = firstInput;
+        } else if (operatorInput) {
+            secondInput += clicked;
+            displayCurrentExpression.textContent = ` ${firstInput} ${operatorInput}`;
+            displayOutput.textContent = secondInput;
         } 
-
-        // display created string    
+    } else if (validOperators.includes(clicked)) {
+        console.log(`Operator clicked! ${clicked}`)
+        if (!operatorInput) {
+            operatorInput = clicked;
+        } else if (operatorInput && firstInput && secondInput) {
+            firstInput = operate(operatorInput, firstInput, secondInput);
+            displayCurrentExpression.textContent = firstInput;
+            secondInput = ""
+        } else if (operatorInput && !firstInput && !secondInput) {
+            firstInput = "0";
+            operatorInput = clicked;
+        } else if (operatorInput && firstInput && !secondInput) {
+            operatorInput = clicked;
+        }
+    } else if (clicked == "=" || clicked == "Enter") {
+        if (operatorInput && firstInput && secondInput) {
+            console.log(`Equals hit with 2 numbers! ${clicked}`);
+            displayCurrentExpression.textContent = `${firstInput} ${operatorInput} ${secondInput} =`
+            firstInput = String(operate(operatorInput, firstInput, secondInput));
+            displayOutput.textContent = firstInput;
+            secondInput = "";
+            operatorInput = "";
+        } else if (operatorInput && firstInput && !secondInput) {
+            console.log(`Equals hit with 1 number! ${clicked}`);
+            firstInput = String(operate(operatorInput, firstInput, firstInput));
+            displayOutput.textContent = firstInput;
+            secondInput = "";
+            operatorInput = "";
+        }
+    }
 };
 
 // Convert user input to a string
@@ -131,34 +130,18 @@ function convertToNumber() {
 // Reset variables to empty and clear textContent
 function clearDisplay() {
     console.log("display cleared")
-    displayOutput.textContent = " ";
+    displayOutput.textContent = "0";
+    displayCurrentExpression.textContent = "";
     firstInput = [];
     secondInput = [];
     operatorInput = "";
 }
 
+
 // TODO
-    // Accept additional numbers for calculation
-        /* 
-        (12 + 7 + 8) Should evaluate 12+7 first, then add 8, like:  (12+7) + 8
-            // put all inputs into an array [43,"+",197,"-",81]
-            // use methods to determine positions of each element
-                // compute value of the first two numbers with given operator  
-                    // set return to a variable
-                // compute next value from the variable created above and the next number
-                // repeat as needed, array[0] may need to be a placeholder
-                    // odd indexes are numbers, evens are operators
-        */
-    // Accept decimal answers
-        // Round at 9 digits
-    // Ensure that after an expression is evaluated, 
-        // new numbers enter also reset all variables
     // Add a backspace key that undoes the last input
-    // Add a decimal button that disables if the current number contains one
     // Add support for keyboards
     // Refactor code for clarity and efficiency
     
-
 // KNOWN ISSUES
-    // numbers like 100 return NaN
-    // decimal numbers do not calculate
+
