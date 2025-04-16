@@ -69,11 +69,17 @@ document.querySelector(".multiply").addEventListener('click', () => display('*')
 document.querySelector(".divide").addEventListener('click', () => display('/'));
 document.querySelector(".equals").addEventListener('click', () => display('='));
 document.querySelector(".clear").addEventListener('click', () => clearDisplay());
+document.querySelector(".backspace").addEventListener('click', () => backspace());
+
+// Keyboard support
+const body = document.querySelector("body");
+body.addEventListener("keydown", (e) => {
+    display(e.key);
+});
 
 // display function
 function display(clicked) {
     if (validInputs.includes(clicked)) {
-        console.log(`Number clicked! ${clicked}`)
         if (!operatorInput) {
             firstInput += clicked;
             displayOutput.textContent = firstInput;
@@ -83,7 +89,6 @@ function display(clicked) {
             displayOutput.textContent = secondInput;
         } 
     } else if (validOperators.includes(clicked)) {
-        console.log(`Operator clicked! ${clicked}`)
         if (!operatorInput) {
             operatorInput = clicked;
         } else if (operatorInput && firstInput && secondInput) {
@@ -98,14 +103,12 @@ function display(clicked) {
         }
     } else if (clicked == "=" || clicked == "Enter") {
         if (operatorInput && firstInput && secondInput) {
-            console.log(`Equals hit with 2 numbers! ${clicked}`);
             displayCurrentExpression.textContent = `${firstInput} ${operatorInput} ${secondInput} =`
             firstInput = String(operate(operatorInput, firstInput, secondInput));
             displayOutput.textContent = firstInput;
             secondInput = "";
             operatorInput = "";
         } else if (operatorInput && firstInput && !secondInput) {
-            console.log(`Equals hit with 1 number! ${clicked}`);
             firstInput = String(operate(operatorInput, firstInput, firstInput));
             displayOutput.textContent = firstInput;
             secondInput = "";
@@ -114,34 +117,30 @@ function display(clicked) {
     }
 };
 
-// Convert user input to a string
-function convertToNumber() {
-    if (firstInput.length !== 0 && secondInput.length === 0) {
-        let stringInput = firstInput.toString().replace(/,/g, '');
-        displayOutput.textContent = Number(stringInput);
-    } else if (secondInput.length !== 0 && secondInput !== "clear") {
-        let stringInput = secondInput.toString().replace(/,/g, '');
-        displayOutput.textContent = Number(stringInput);
-    } else {
-        clearDisplay();
+function backspace() {
+    console.log("backspace clicked!")
+    if (!operatorInput) {
+        firstInput = firstInput.slice(0, firstInput.length - 1);
+        if (!firstInput) {
+            displayOutput.textContent = 0;
+        } else {
+            displayOutput.textContent = firstInput;
+        }
+    } else if (operatorInput && secondInput) {
+        secondInput = secondInput.slice(0, secondInput.length - 1) 
+        if (!secondInput) {
+            displayOutput.textContent = 0;
+        } else {
+            displayOutput.textContent = secondInput;
+        }
     }
 }
 
 // Reset variables to empty and clear textContent
 function clearDisplay() {
-    console.log("display cleared")
     displayOutput.textContent = "0";
     displayCurrentExpression.textContent = "";
     firstInput = [];
     secondInput = [];
     operatorInput = "";
 }
-
-
-// TODO
-    // Add a backspace key that undoes the last input
-    // Add support for keyboards
-    // Refactor code for clarity and efficiency
-    
-// KNOWN ISSUES
-
